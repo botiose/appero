@@ -1,0 +1,5 @@
+#+CATEGORY: CPP
+
+* TODO Remove weights where not needed
+* TODO Refactor to classes
+* TODO Optimize
