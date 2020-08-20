@@ -1,19 +1,21 @@
-def floyd_warshall(A, n):
-    d = []
-    p = []
-    for i in range(n):
-        d.append([])
-        p.append([])
-        for j in range(n):
-            if len(A[i][j]) != 0:
-                d[i].append(A[i][j][0])
+def floyd_warshall(adj_matrix, num_vertices):
+    shortest_matrix = []
+    parent_matrix = []
+    for i in range(num_vertices):
+        shortest_matrix.append([])
+        parent_matrix.append([])
+        for j in range(num_vertices):
+            if len(adj_matrix[i][j]) != 0:
+                shortest_matrix[i].append(adj_matrix[i][j][0])
             else:
-                d[i].append(float('inf'))
-            p[i].append(i)
-    for k in range(n): 
-        for i in range(n): 
-            for j in range(n):
-                if d[i][k] + d[k][j] < d[i][j]:
-                    d[i][j] = d[i][k] + d[k][j]
-                    p[i][j] = p[k][j]
-    return (d, p)
+                shortest_matrix[i].append(float('inf'))
+            parent_matrix[i].append(i)
+    for k in range(num_vertices): 
+        for i in range(num_vertices): 
+            for j in range(num_vertices):
+                if shortest_matrix[i][k] + shortest_matrix[k][j] < \
+                   shortest_matrix[i][j]:
+                    shortest_matrix[i][j] = shortest_matrix[i][k] + \
+                        shortest_matrix[k][j]
+                    parent_matrix[i][j] = parent_matrix[k][j]
+    return (shortest_matrix, parent_matrix)
