@@ -61,11 +61,11 @@ def build_bipartite(adj, degrees, n):
             i += 1
     return (M, ids)
 
-def dup_path(M2, p, src, dst):
-    M2[src][dst] += 1;
+def dup_path(M, p, src, dst):
+    M[p[src][dst]][dst].append(-1)
     if p[src][dst] == src:
         return
-    dup_path(M2, p, src, p[src][dst])
+    dup_path(M, p, src, p[src][dst])
 
 def get_oriented_indices(matching, ids, degrees):
     l = []
@@ -90,9 +90,10 @@ def solve(is_oriented, num_vertices, edge_list):
     (bipartite, ids) = build_bipartite(shortest, degrees, num_vertices)
     matching = match_hungarian(bipartite, degrees, ids)
     indices = get_oriented_indices(matching, ids, degrees)
-    add_duplicates(M2, parent, indices)
+    add_duplicates(M, parent, indices)
     circuit = []
-    hierholzer(M2, [0], circuit, 0, len(degrees))
+    hierholzer(M, [0], circuit, 0, len(degrees))
+    print(M2)
     return(circuit)
 
 sys.modules[__name__] = solve
