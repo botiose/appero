@@ -40,7 +40,7 @@ def build_bipartite(adj, degrees, n):
     for degree in degrees:
         if degree != 0:
             num_inbalanced += abs(degree)
-    biparite = [[float('inf') for i in range(num_inbalanced)] for j in
+    bipartite_matrix = [[float('inf') for i in range(num_inbalanced)] for j in
          range(num_inbalanced)] 
     ids = [-1] * num_inbalanced
     i = 0
@@ -51,16 +51,16 @@ def build_bipartite(adj, degrees, n):
             for l in range(n):
                 if degrees[l] != 0:
                     if degrees[k] < 0 and degrees[l] > 0:
-                        biparite[i][j] = adj[k][l]
-                        biparite[j][i] = adj[k][l]
+                        bipartite_matrix[i][j] = adj[k][l]
+                        bipartite_matrix[j][i] = adj[k][l]
                     j += 1
             for h in range(abs(degrees[k])-1):
                 for g in range(num_inbalanced):
-                    biparite[num_inbalanced-i-1][g] = M[i][g]
-                    biparite[g][num_inbalanced-i-1] = M[i][g]
+                    bipartite_matrix[num_inbalanced-i-1][g] = M[i][g]
+                    bipartite_matrix[g][num_inbalanced-i-1] = M[i][g]
                 ids[num_inbalanced-i-1] = k
             i += 1
-    return (biparite, ids)
+    return (bipartite_matrix, ids)
 
 def dup_path(deg_matrix, parent_matrix, src, dst):
     deg_matrix[parent_matrix[src][dst]][dst] += 1
@@ -86,12 +86,12 @@ def add_duplicates(deg_matrix, parent, indices):
         dup_path(deg_matrix, parent, start, end)
     
 def solve(is_oriented, num_vertices, edge_list):
-    (adj_matrix, deg_matrix, degrees) = build_matrix(is_oriented,
-                                                         num_vertices,
-                                                         edge_list)
+    (adj_matrix, deg_matrix, degrees) = build_matrix(is_oriented, num_vertices,
+                                                     edge_list)
     (shortest_matrix, parent_matrix) = floyd_warshall(adj_matrix, num_vertices)
-    (bipartite, ids) = build_bipartite(shortest_matrix, degrees, num_vertices)
-    matching = match_hungarian(bipartite, degrees, ids)
+    (bipartite_matrix, ids) = build_bipartite(shortest_matrix, degrees,
+                                              num_vertices)
+    matching = match_hungarian(bipartite_matrix, degrees, ids)
     indices = get_oriented_indices(matching, ids, degrees)
     add_duplicates(deg_matrix, parent_matrix, indices)
     circuit = []
