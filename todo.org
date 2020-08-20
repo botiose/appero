@@ -1,5 +1,11 @@
 #+CATEGORY: CPP
 
 * TODO Remove weights where not needed
+* TODO Check reference and value passes
+* TODO Properly name parameters
 * TODO Refactor to classes
+* TODO Comment public functions
+* TODO Make a test suit
+* TODO Make flow charts
+* TODO Verify starting point
 * TODO Optimize

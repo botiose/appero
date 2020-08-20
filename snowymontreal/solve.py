@@ -1,4 +1,8 @@
-from hungarian import match_hungarian
+from snowymontreal.hungarian import match_hungarian
+from snowymontreal.floyd_warshall import floyd_warshall
+from snowymontreal.hierholzer import hierholzer
+
+import sys
 
 def incr_insert(l, e):
     for i in range(len(l)):
@@ -7,46 +11,29 @@ def incr_insert(l, e):
             return
     l.append(e)
 
-def add_edge(src, dst, dist, M, degrees):
+def add_edge(src, dst, dist, M, M2, degrees):
     incr_insert(M[src][dst], dist)
     degrees[src] += 1
     degrees[dst] -= 1
+    M2[src][dst] += 1
 
 def build_matrix(is_oriented, num_vertices, edge_list):
     M = []
+    M2 = []
     degrees = [0] * num_vertices
     for i in range(num_vertices):
         l = []
+        l2 = [0] * num_vertices
         for k in range(num_vertices):
             l.append([])
         M.append(l)
+        M2.append(l2)
     for (src, dst, dist) in edge_list:
         inner = []
-        M[src][dst].append
-        add_edge(src, dst, dist, M, degrees)
+        add_edge(src, dst, dist, M, M2, degrees)
         if not is_oriented:
-            add_edge(dst, src, dist, M, degrees)
-    return (M, degrees)
-
-def floydWarshall(A, n):
-    d = []
-    p = []
-    for i in range(n):
-        d.append([])
-        p.append([])
-        for j in range(n):
-            if len(A[i][j]) != 0:
-                d[i].append(A[i][j][0])
-            else:
-                d[i].append(float('inf'))
-            p[i].append(i)
-    for k in range(n): 
-        for i in range(n): 
-            for j in range(n):
-                if d[i][k] + d[k][j] < d[i][j]:
-                    d[i][j] = d[i][k] + d[k][j]
-                    p[i][j] = p[k][j]
-    return (d, p)
+            add_edge(dst, src, dist, M, M2, degrees)
+    return (M, M2, degrees)
 
 def build_bipartite(adj, degrees, n):
     m = 0
@@ -74,11 +61,11 @@ def build_bipartite(adj, degrees, n):
             i += 1
     return (M, ids)
 
-def dup_path(M, p, src, dst):
-    M[p[src][dst]][dst].append(-1)
+def dup_path(M2, p, src, dst):
+    M2[src][dst] += 1;
     if p[src][dst] == src:
         return
-    dup_path(M, p, src, p[src][dst])
+    dup_path(M2, p, src, p[src][dst])
 
 def get_oriented_indices(matching, ids, degrees):
     l = []
@@ -96,41 +83,16 @@ def get_oriented_indices(matching, ids, degrees):
 def add_duplicates(M, parent, indices):
     for (start, end) in indices:
         dup_path(M, parent, start, end)
-
-def hierholzer(M, path, circuit, cur, n):
-    path.append(cur)
-    for j in range(n):
-        if len(M[cur][j]) != 0:
-            M[cur][j].pop()
-            hierholzer(M, path, circuit, j, n)
-    circuit.insert(0, path.pop())
     
 def solve(is_oriented, num_vertices, edge_list):
-    (M, degrees) = build_matrix(is_oriented, num_vertices, edge_list)
-    (shortest, parent) = floydWarshall(M, num_vertices)
+    (M, M2, degrees) = build_matrix(is_oriented, num_vertices, edge_list)
+    (shortest, parent) = floyd_warshall(M, num_vertices)
     (bipartite, ids) = build_bipartite(shortest, degrees, num_vertices)
     matching = match_hungarian(bipartite, degrees, ids)
     indices = get_oriented_indices(matching, ids, degrees)
-    add_duplicates(M, parent, indices)
+    add_duplicates(M2, parent, indices)
     circuit = []
-    hierholzer(M, [0], circuit, 0, len(degrees))
-    print(circuit)
+    hierholzer(M2, [0], circuit, 0, len(degrees))
+    return(circuit)
 
-edges = [(0, 2, 20), (0, 1, 10), (1, 4, 10), (1, 3, 50), (2, 3, 20), (2, 4, 33),
-         (3, 4, 5), (3, 5, 12), (4, 0, 12), (4, 5, 1), (5, 2, 22)]
-
-solve(True, 6, edges)
-
-# inf = float('inf')
-# bipartite = [[inf,7,inf,6,inf,9,inf,3], # inf
-#              [7,inf,4,inf,3,inf,5,inf], # 1
-#              [inf,4,inf,8,inf,4,inf,8], # 2
-#              [6,inf,8,inf,5,inf,9,inf], # 3
-#              [inf,3,inf,5,inf,4,inf,7], # 4
-#              [9,inf,4,inf,4,inf,2,inf], # 5
-#              [inf,5,inf,9,inf,2,inf,4], # 6
-#              [3,inf,8,inf,7,inf,4,inf]] # 7
-# degrees = [1,-1,1,-1,1,-1,1,-1]
-# ids = [0,1,2,3,4,5,6,7]
-# matching = match_hungarian(bipartite, degrees, ids)
-# print(matching)
+sys.modules[__name__] = solve
