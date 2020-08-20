@@ -8,4 +8,5 @@
 * TODO Make a test suit
 * TODO Make flow charts
 * TODO Verify starting point
+* TODO Undirected
 * TODO Optimize
