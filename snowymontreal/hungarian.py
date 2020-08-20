@@ -8,43 +8,43 @@ def init_unmatched(degrees, ids, n):
             dst.append(i)
     return (src, dst)
 
-def init_labels(M, src, n):
+def init_labels(bipartite_matrix, src, n):
     labels = [0] * n
     for i in src:
-        labels[i] = min(M[i])
+        labels[i] = min(bipartite_matrix[i])
     return labels                
 
-def build_equality(A, M, X, labels, n, matching):
+def fill_equality(bipartite_matrix, equality_matrix, X, labels, n, matching):
     for i in range(n):
         if labels[i] != 0:
-            if labels[i] in A[i] and i in X:
-                j = A[i].index(labels[i])
-                M[i][j] = True
-                M[j][i] = True
-    return M
+            if labels[i] in bipartite_matrix[i] and i in X:
+                j = bipartite_matrix[i].index(labels[i])
+                equality_matrix[i][j] = True
+                equality_matrix[j][i] = True
 
-def find_alt(A, n, s, t, dst, match, cur, p):
+def find_alternating(equality_matrix, n, s, t, dst, match, cur, p):
     if match:
         s.append(cur)
     else:
         t.append(cur)
     p[cur] = False
     for i in range(n):
-        if A[cur][i]:
+        if equality_matrix[cur][i]:
             if i in dst:
                 return [i]
             if p[i]:
-                path = find_alt(A, n, s, t, dst, not match, i, p)
+                path = find_alternating(equality_matrix, n, s, t, dst,
+                                        not match, i, p)
                 if not path is None:
                     path.insert(0,i)
                     return path
     return None
 
-def update_labels(A, labels, s, t, y):
+def update_labels(bipartite_matrix, labels, s, t, y):
     delta = -float('inf')
     for i in range(len(s)):
         for j in y - set(t):
-            cur_delta = labels[s[i]] + labels[j] - A[s[i]][j]
+            cur_delta = labels[s[i]] + labels[j] - bipartite_matrix[s[i]][j]
             if cur_delta > delta:
                 delta = cur_delta
     for i in range(len(s)):
@@ -72,24 +72,28 @@ def increase_matching(matching, path):
     return tmp1 + tmp2
     
 
-def match_hungarian(A, degrees, ids):
-    n = len(ids)
-    (src, dst) = init_unmatched(degrees, ids, n)
+def match_hungarian(bipartite_matrix, degrees, ids):
+    num_vertices = len(ids)
+    (src, dst) = init_unmatched(degrees, ids, num_vertices)
     matching = []
     X = set(src)
     Y = set(dst)
-    labels = init_labels(A, src, n)
-    equality = [[False for i in range(n)] for j in range(n)] 
-    equality = build_equality(A, equality, X, labels, n, matching)
+    labels = init_labels(bipartite_matrix, src, num_vertices)
+    equality_matrix = [[False for i in range(num_vertices)] for j in
+                range(num_vertices)] 
+    fill_equality(bipartite_matrix, equality_matrix, X, labels,
+                  num_vertices, matching)
     while len(src) != 0:
         start = src[0]
         s = []
         t = []
-        p = [True] * n
-        path = find_alt(equality, n, s, t, dst, True, start, p)
+        p = [True] * num_vertices
+        path = find_alternating(equality_matrix, num_vertices, s, t, dst, True,
+                                start, p)
         if path is None:
-            update_labels(A, labels, s, t, Y)
-            equality = build_equality(A, equality, X, labels, n, matching)
+            update_labels(bipartite_matrix, labels, s, t, Y)
+            fill_equality(bipartite_matrix, equality_matrix, X, labels,
+                           num_vertices, matching)
         else:
             path.insert(0, start)
             matching = increase_matching(matching, path)
