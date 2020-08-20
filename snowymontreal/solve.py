@@ -4,44 +4,45 @@ from snowymontreal.hierholzer import hierholzer
 
 import sys
 
-def incr_insert(l, e):
-    for i in range(len(l)):
-        if e < l[i]:
-            l.insert(i, e)
+def incr_insert(adj_vect, elt):
+    for i in range(len(adj_vect)):
+        if e < adj_vect[i]:
+            adj_vect.insert(i, elt)
             return
-    l.append(e)
+    adj_vect.append(elt)
 
-def add_edge(src, dst, dist, M, M2, degrees):
-    incr_insert(M[src][dst], dist)
+def add_edge(src, dst, dist, adj_matrix, deg_matrix, degrees):
+    incr_insert(adj_matrix[src][dst], dist)
     degrees[src] += 1
     degrees[dst] -= 1
-    M2[src][dst] += 1
+    deg_matrix[src][dst] += 1
 
 def build_matrix(is_oriented, num_vertices, edge_list):
-    M = []
-    M2 = []
+    adj_matrix = []
+    deg_matrix = []
     degrees = [0] * num_vertices
     for i in range(num_vertices):
-        l = []
-        l2 = [0] * num_vertices
+        adj_row = []
+        deg_row = [0] * num_vertices
         for k in range(num_vertices):
-            l.append([])
-        M.append(l)
-        M2.append(l2)
+            adj_row.append([])
+        adj_matrix.append(adj_row)
+        deg_matrix.append(deg_row)
     for (src, dst, dist) in edge_list:
         inner = []
-        add_edge(src, dst, dist, M, M2, degrees)
+        add_edge(src, dst, dist, adj_matrix, deg_matrix, degrees)
         if not is_oriented:
-            add_edge(dst, src, dist, M, M2, degrees)
-    return (M, M2, degrees)
+            add_edge(dst, src, dist, adj_matrix, deg_matrix, degrees)
+    return (adj_matrix, deg_matrix, degrees)
 
 def build_bipartite(adj, degrees, n):
-    m = 0
-    for degree in degrees: # do this when retrieving degrees
+    num_inbalanced = 0
+    for degree in degrees:
         if degree != 0:
-            m += abs(degree)
-    M = [[float('inf') for i in range(m)] for j in range(m)] 
-    ids = [-1] * m
+            num_inbalanced += abs(degree)
+    biparite = [[float('inf') for i in range(num_inbalanced)] for j in
+         range(num_inbalanced)] 
+    ids = [-1] * num_inbalanced
     i = 0
     for k in range(n):
         if degrees[k] != 0:
@@ -50,25 +51,25 @@ def build_bipartite(adj, degrees, n):
             for l in range(n):
                 if degrees[l] != 0:
                     if degrees[k] < 0 and degrees[l] > 0:
-                        M[i][j] = adj[k][l]
-                        M[j][i] = adj[k][l]
+                        biparite[i][j] = adj[k][l]
+                        biparite[j][i] = adj[k][l]
                     j += 1
             for h in range(abs(degrees[k])-1):
-                for g in range(m):
-                    M[m-i-1][g] = M[i][g]
-                    M[g][m-i-1] = M[i][g]
-                ids[m-i-1] = k
+                for g in range(num_inbalanced):
+                    biparite[num_inbalanced-i-1][g] = M[i][g]
+                    biparite[g][num_inbalanced-i-1] = M[i][g]
+                ids[num_inbalanced-i-1] = k
             i += 1
-    return (M, ids)
+    return (biparite, ids)
 
-def dup_path(M2, p, src, dst):
-    M2[p[src][dst]][dst] += 1
-    if p[src][dst] == src:
+def dup_path(deg_matrix, parent_matrix, src, dst):
+    deg_matrix[parent_matrix[src][dst]][dst] += 1
+    if parent_matrix[src][dst] == src:
         return
-    dup_path(M2, p, src, p[src][dst])
+    dup_path(deg_matrix, parent_matrix, src, parent_matrix[src][dst])
 
 def get_oriented_indices(matching, ids, degrees):
-    l = []
+    indices = []
     for edge in matching:
         start = -1;
         end = -1;
@@ -77,24 +78,24 @@ def get_oriented_indices(matching, ids, degrees):
                 end = ids[elt]
             else:
                 start = ids[elt]
-        l.append((start, end))
-    return l
+        indices.append((start, end))
+    return indices
 
-def add_duplicates(M, parent, indices):
+def add_duplicates(deg_matrix, parent, indices):
     for (start, end) in indices:
-        dup_path(M, parent, start, end)
+        dup_path(deg_matrix, parent, start, end)
     
 def solve(is_oriented, num_vertices, edge_list):
-    (M, M2, degrees) = build_matrix(is_oriented, num_vertices, edge_list)
-    (shortest, parent) = floyd_warshall(M, num_vertices)
-    (bipartite, ids) = build_bipartite(shortest, degrees, num_vertices)
+    (adj_matrix, deg_matrix, degrees) = build_matrix(is_oriented,
+                                                         num_vertices,
+                                                         edge_list)
+    (shortest_matrix, parent_matrix) = floyd_warshall(adj_matrix, num_vertices)
+    (bipartite, ids) = build_bipartite(shortest_matrix, degrees, num_vertices)
     matching = match_hungarian(bipartite, degrees, ids)
     indices = get_oriented_indices(matching, ids, degrees)
-    add_duplicates(M2, parent, indices)
+    add_duplicates(deg_matrix, parent_matrix, indices)
     circuit = []
-    print(M)
-    hierholzer(M2, [0], circuit, 0, len(degrees))
-    print(M2)
+    hierholzer(deg_matrix, [0], circuit, 0, len(degrees))
     return(circuit)
 
 sys.modules[__name__] = solve

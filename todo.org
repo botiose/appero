@@ -9,4 +9,5 @@
 * TODO Make flow charts
 * TODO Verify starting point
 * TODO Undirected
+* TODO Minimize use of len()
 * TODO Optimize
