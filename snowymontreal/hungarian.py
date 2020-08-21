@@ -1,5 +1,5 @@
 def init_unmatched(degrees, ids, n):
-    """Initializes the source and destination vertices from their degrees"""
+    """Initializes the source and destination vertices from their degrees."""
     src = []
     dst = []
     for i in range(n):
@@ -26,7 +26,7 @@ def fill_equality(bipartite_matrix, equality_matrix, X, labels, n, matching):
                 equality_matrix[j][i] = True
 
 def find_alternating(equality_matrix, n, s, t, dst, match, cur, p):
-    """Returns an alternating path if found. Otherwise it returns None"""
+    """Returns an alternating path if found. Otherwise it returns None."""
     if match:
         s.append(cur)
     else:
@@ -45,7 +45,7 @@ def find_alternating(equality_matrix, n, s, t, dst, match, cur, p):
     return None
 
 def update_labels(bipartite_matrix, labels, s, t, y):
-    """Updates assigned labels of the graph to extend visible edges"""
+    """Updates assigned labels of the graph to extend visible edges."""
     delta = -float('inf')
     for i in range(len(s)):
         for j in y - set(t):
@@ -58,14 +58,14 @@ def update_labels(bipartite_matrix, labels, s, t, y):
         labels[t[i]] += delta
 
 def path_to_edges(path):
-    """Converts a vertex path to a list of edges represented as tuples"""
+    """Converts a vertex path to a list of edges represented as tuples."""
     edges = []
     for i in range(len(path)-1):
         edges.append({path[i], path[i+1]})
     return edges
 
 def subs_edges(set1, set2):
-    """Removes elements in set2 from set1"""
+    """Removes elements in set2 from set1."""
     res = []
     for edge in set2:
         if not edge in set1:
@@ -80,9 +80,9 @@ def increase_matching(matching, path):
     And edges that are not in the matching but are in the path are included.
     """
     aug_path_edges = path_to_edges(path)
-    tmp1 = subs_edges(matching, aug_path_edges)
-    tmp2 = subs_edges(aug_path_edges, matching)
-    return tmp1 + tmp2
+    res_set1 = subs_edges(matching, aug_path_edges)
+    res_set2 = subs_edges(aug_path_edges, matching)
+    return res_set1 + res_set2
     
 
 def match_hungarian(bipartite_matrix, degrees, ids):
@@ -95,9 +95,13 @@ def match_hungarian(bipartite_matrix, degrees, ids):
     this function follows a straightforward implementation of the hungarian 
     matching algorithm.
 
-    bipartite_matrix (matrix): matrix of a bipartite graph
-    degrees (vector): degrees of each vertex in the original graph
-    ids (vector): vertex ids of the original graph.
+    Parameters:
+    bipartite_matrix (matrix): Matrix of a bipartite graph
+    degrees (vector): Degrees of each vertex in the original graph
+    ids (vector): Vertex ids of the original graph.
+    
+    Returns: 
+    matching (vector): Result matching
     """
     num_vertices = len(ids)
     (src, dst) = init_unmatched(degrees, ids, num_vertices)

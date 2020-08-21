@@ -5,9 +5,9 @@ def hierholzer(deg_matrix, is_oriented, path, circuit, cur, num_vertices):
     Given an adjancency matrix corresponding to a eulerian graph this algorithm
     finds the eulerian cycle of this one.
 
-    Parameters
+    Parameters:
     deg_matrix (matrix): Ddjacency matrix
-    is_oriented (bool): Whether the graph is oriented
+    is_oriented (boolean): Whether the graph is oriented
     path (vector): Path to current vertex
     circuit (vector): Currently built eulerian path
     cur (int): Current vertex
