@@ -104,7 +104,7 @@ def solve(is_oriented, num_vertices, edge_list):
     add_duplicates(deg_matrix, parent_matrix, indices)
     circuit = []
     start = find_non_isolated(adj_matrix, num_vertices)
-    hierholzer(deg_matrix, [start], circuit, start, len(degrees))
+    hierholzer(deg_matrix, is_oriented, [start], circuit, start, len(degrees))
     return(circuit)
 
 sys.modules[__name__] = solve
