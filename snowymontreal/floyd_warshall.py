@@ -1,4 +1,19 @@
 def floyd_warshall(adj_matrix, num_vertices):
+    """
+    Implementation of the Floyd-Warshall algorithm.
+    
+    This algorithm computes the shortest path in between all vertices of the 
+    graph. In this implementation the additional parent matrix is built for 
+    subsequent use.
+
+    Parameters:
+    adj_matrix (matrix): Adjacency matrix
+    num_vertices (vector): Number of vertices in the graph
+
+    Returns:
+    shortest_matrix: Shortest path matrix in between each vertex in the graph
+    parent_matrix: The corresponding parent matrix
+    """
     shortest_matrix = []
     parent_matrix = []
     for i in range(num_vertices):
