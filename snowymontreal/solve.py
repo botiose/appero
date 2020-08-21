@@ -6,7 +6,7 @@ import sys
 
 def incr_insert(adj_vect, elt):
     for i in range(len(adj_vect)):
-        if e < adj_vect[i]:
+        if elt < adj_vect[i]:
             adj_vect.insert(i, elt)
             return
     adj_vect.append(elt)
@@ -56,8 +56,10 @@ def build_bipartite(adj, degrees, n):
                     j += 1
             for h in range(abs(degrees[k])-1):
                 for g in range(num_inbalanced):
-                    bipartite_matrix[num_inbalanced-i-1][g] = M[i][g]
-                    bipartite_matrix[g][num_inbalanced-i-1] = M[i][g]
+                    bipartite_matrix[num_inbalanced-i-1][g] = \
+                        bipartite_matrix[i][g]
+                    bipartite_matrix[g][num_inbalanced-i-1] = \
+                        bipartite_matrix[i][g]
                 ids[num_inbalanced-i-1] = k
             i += 1
     return (bipartite_matrix, ids)
