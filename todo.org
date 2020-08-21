@@ -3,10 +3,8 @@
 * DONE Remove weights where not needed
 * DONE Check reference and value passes
 * DONE Properly name parameters
-* TODO Comment public functions
+* DONE Comment public functions
 * DONE Make a test suit
-* TODO Make flow charts
 * DONE Verify starting point
 * DONE Undirected
-* TODO Minimize use of len()
 * TODO Optimize
