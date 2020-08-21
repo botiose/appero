@@ -34,9 +34,11 @@ while True:
         tot1 += G[prev_vert][cur_vert][0]['distance']
         prev_vert = cur_vert
 
-    if tot1 != tot2: # TODO provide more debug info
+    if tot1 != tot2:
         print("test.py: Mismatch. given: " + str(tot1) + ", expected: "
               + str(tot2))
+        for edge in G.edges():
+            print(edge)
         quit()
     else:
         print("test.py: Results match")

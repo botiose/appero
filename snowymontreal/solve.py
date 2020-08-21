@@ -86,6 +86,12 @@ def get_oriented_indices(matching, ids, degrees):
 def add_duplicates(deg_matrix, parent, indices):
     for (start, end) in indices:
         dup_path(deg_matrix, parent, start, end)
+
+def find_non_isolated(adj_matrix, num_vertices):
+    for i in range(num_vertices):
+        for j in range(num_vertices):
+            if len(adj_matrix[i][j]) != 0:
+                return i
     
 def solve(is_oriented, num_vertices, edge_list):
     (adj_matrix, deg_matrix, degrees) = build_matrix(is_oriented, num_vertices,
@@ -97,7 +103,8 @@ def solve(is_oriented, num_vertices, edge_list):
     indices = get_oriented_indices(matching, ids, degrees)
     add_duplicates(deg_matrix, parent_matrix, indices)
     circuit = []
-    hierholzer(deg_matrix, [0], circuit, 0, len(degrees))
+    start = find_non_isolated(adj_matrix, num_vertices)
+    hierholzer(deg_matrix, [start], circuit, start, len(degrees))
     return(circuit)
 
 sys.modules[__name__] = solve
