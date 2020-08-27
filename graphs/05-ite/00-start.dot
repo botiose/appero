@@ -1,0 +1,30 @@
+graph D {
+
+graph [bgcolor=transparent];
+node [style=filled shape=hexagon fillcolor="#3f2b2c" color="#aca287"
+      fontcolor="#ec3047" fontsize=17 penwidth=4 fontname="Courier New Bold"]
+edge [fontsize=12 fontcolor="#3f2b2c" fontname="Courier New Bold" penwidth=3
+      color="#3f2b2c"]
+splines=false
+
+0 [pos="0,0" xlabel=<<font color="#3f2b2c">0</font>> xlp="45,0"]
+1 [pos="0,-300" xlabel=<<font color="#3f2b2c">10</font>> xlp="45,-300"]
+2 [pos="200,0" color="#e47070" xlabel=<<font color="#3f2b2c">0</font>>
+   xlp="245,0"]
+3 [pos="200,-300" xlabel=<<font color="#3f2b2c">6</font>> xlp="245,-300"]
+4 [pos="400,0" xlabel=<<font color="#3f2b2c">-2</font>> xlp="445,0"]
+5 [pos="400,-300" color="#fdf62e" xlabel=<<font color="#3f2b2c">4</font>>
+   xlp="445,-300"]
+
+0 -- 1 [label="10 "]
+0 -- 3 [label="11    " color="#aca287" fontcolor="#aca287"]
+0 -- 5 [label="9      " color="#aca287" fontcolor="#aca287"]
+
+2 -- 1 [label="13    "]
+2 -- 3 [headlabel="11" color="#aca287" fontcolor="#aca287"]
+2 -- 5 [label="7    "]
+
+4 -- 1 [label="      8"]
+4 -- 3 [label="4    "]
+4 -- 5 [label="2 "]
+}
