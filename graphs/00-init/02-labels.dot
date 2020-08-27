@@ -20,13 +20,6 @@ splines=false
 5 [pos="400,-300" color="#8bcd88" xlabel=<<font color="#3f2b2c">2</font>>
    xlp="445,-300"]
 
-0 [pos="0,0" color="#e47070"]
-1 [pos="0,-300" color="#8bcd88"]
-2 [pos="200,0" color="#e47070"]
-3 [pos="200,-300" color="#8bcd88"]
-4 [pos="400,0" color="#e47070"]
-5 [pos="400,-300" color="#8bcd88"]
-
 0 -- 1 [label="10 "]
 0 -- 3 [label="11    "]
 0 -- 5 [label="9      "]
