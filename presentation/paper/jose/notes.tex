@@ -1,0 +1,113 @@
+\documentclass[11pt]{article}
+
+% Use the following to compile
+% mkdir tmp
+% pdflatex -aux-directory=tmp -output-directory=tmp --shell-escape notes.tex
+
+
+% Package use definitions
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage[parfill]{parskip}
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage[outputdir=tmp]{minted}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage[hidelinks]{hyperref}
+
+% Header and footer setup
+\pagestyle{fancy}
+\rhead{Jose A. Henriquez Roa}
+\lhead{APPERO}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+% Image directory specification
+\graphicspath{ {./images/} }
+
+% Settings minted option for the entire document
+\definecolor{LightGray}{rgb}{0.9, 0.9, 0.9}
+\setminted{frame=lines,framesep=2mm,bgcolor=LightGray,linenos,
+  fontsize=\footnotesize, baselinestretch=1.2}
+
+% Start of document
+\begin{document}
+
+% Title page and table of contents setup
+\begin{titlepage}
+  \begin{center}
+    \vspace*{1cm}
+    \Huge
+    \textbf{APPERO}\\
+    \vspace{0.4cm}
+    Optimisation Hivernale\\
+    \vspace{5cm}
+    \textbf{Jose A. Henriquez Roa}
+    \newpage
+    \normalsize
+    \tableofcontents
+    \newpage
+  \end{center}
+\end{titlepage}
+
+% Document Body:
+\section{Contributions}
+Dans l'espoir de faire le projet par moi-même, j'ai choisi un groupe vide le 8
+août. J'ai commencé à faire des recherches pour résoudre le problème le même
+jour. Au moment où l'annonce a été faite que les groupes de moins de 3 ou 4
+membres ont été fusionnés le 17 août, j'avais déjà une implémentation
+fonctionnelle d'un algorithme pour résoudre le problème.\\\\
+Lors de notre première réunion de groupe, la décision a ensuite été prise de
+répartir la mise en œuvre et la présentation des trois principaux algorithmes
+que j'ai utilisés entre nous trois. Leurs nouvelles implémentations devaient
+ensuite être intégrées ultérieurement. Cependant, au fil du temps, la décision a
+été prise de garder mon implémentation intégrée dans l'algorithme
+principal. C'est la raison pour laquelle ils sont tous répertoriés ici.
+\subsection{Main algorithm implementation}
+\textbf{Path:} \texttt{appero/snowymontreal/solve.py}\\\\
+C'est l'algorithme qui présente la solution aux principaux
+Problème: \textbf{Route Inspection Problem} ou \textbf{Chinese Postman Problem}.
+\subsection{Main algorithm présentation}
+\textbf{Path:} \texttt{appero/videos/pb-intro.mp4}\\\\
+J'étais responsable de la présentation de celui-ci. Dans la vidéo finale,
+celle-ci se trouve dans la section \textit{Introduction}. Le clip peut également
+être trouvé dans le \textit{Path} mentionné ci-dessus.
+\subsection{Hungarian algorithm implementation}
+\textbf{Path:} \texttt{appero/snowymontreal/hungarian.py}\\\\
+Cet algorithme est utilisé pour trouver la couplage minimale dans le
+graphe bipartite construit à partir des sommet de degré plus grand et plus petit
+que 0 (plus d'informations à ce sujet sur la vidéo de présentation). Cet
+algorithme a été développé et publié par Harold Kuhn en 1955.
+\subsection{Hungarian algorithm présentation}
+\textbf{Path:} \texttt{appero/videos/hungarian.mp4}\\\\
+J'étais également responsable de la présentation de cet algorithme. Celui-ci se
+trouve dans la section respective \textit{Hungarian Algorithm} de la vidéo
+finale ou dans le \textit{Path} mentionné ci-dessus.
+\subsection{Floyd-Warshall algorithm implementation}
+\textbf{Path:} \texttt{appero/snowymontreal/floyd\_warshall.py}\\\\
+Cet algorithme est utilisé pour trouver le chemin de poids minimal entre tous
+les sommet du graph. Il est principalement utilisé pour la section de
+duplication de chemin de l'algorithme principal (plus d'informations à ce sujet
+sur la vidéo de présentation). Cet algorithme a été développé et publié par
+Rober Floyd et Stephen Warshall en 1962.
+\subsection{Hierholzer algorithm implementation}
+\textbf{Path:} \texttt{appero/snowymontreal/hierholzer.py}\\\\
+Après duplication de chemin, cet algorithme est utilisé pour trouver le chemin
+eulérien final retourné (plus d'informations à ce sujet sur la vidéo de
+présentation). Cet algorithme a été développé et publié par Carl Hierholzer en
+1873.Après duplication de chemin, cet algorithme est utilisé pour trouver le
+chemin eulérien final retourné (plus d'informations à ce sujet sur la vidéo de
+présentation). Cet algorithme a été développé et publié par Carl Hierholzer en
+1873.
+\subsection{Test suit}
+\textbf{Path: \texttt{appero/test.py}}\\\\
+Il s'agit d'une simple "black box testsuit" pour vérifier
+la sortie de l'algorithm principal.
+\section{Éléments appris}
+\subsection{Chinese postman problem}
+J'ai appris un moyen de résoudre le problème du facteur chinois.
+\subsection{Hungarian Algorithm}
+Je me suis également familiarisé avec le fonctionnement interne du
+"Hungarian Algorithm".
+\end{document}

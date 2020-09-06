@@ -2,8 +2,6 @@ from snowymontreal.hungarian import match_hungarian
 from snowymontreal.floyd_warshall import floyd_warshall
 from snowymontreal.hierholzer import hierholzer
 
-import sys
-
 def incr_insert(adj_vect, elt):
     """Insert elt into adj_vect while keeping incrementing order in the list."""
     for i in range(len(adj_vect)):
@@ -131,4 +129,3 @@ def solve(is_oriented, num_vertices, edge_list):
     hierholzer(deg_matrix, is_oriented, [start], circuit, start, len(degrees))
     return(circuit)
 
-sys.modules[__name__] = solve

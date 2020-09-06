@@ -1,0 +1,10 @@
+This project presents a solution to the Chinese Postman Problem.
+
+Given either directed or undirected graph with positively weighted edges a
+minimum weight traversal path of all edges in the graph is returned.
+
+The 'solve' function can be imported with the following line:
+
+from snowymontreal.solver import solve
+
+An example use case is given in 'main.py' on the root folder.

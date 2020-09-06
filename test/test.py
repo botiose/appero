@@ -2,8 +2,11 @@ import matplotlib.pyplot as plt
 import random
 import networkx as nx
 from external.pp.postman_problems.solver import cpp
-from snowymontreal import solve
+
 import sys
+sys.path.append("..")
+
+from snowymontreal.solver import solve
 
 num_vertices = 4
 is_oriented = True

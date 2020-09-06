@@ -1,0 +1,108 @@
+\documentclass[11pt]{article}
+
+% Use the following to compile
+% mkdir tmp
+% pdflatex -aux-directory=tmp -output-directory=tmp --shell-escape notes.tex
+
+
+% Package use definitions
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage[parfill]{parskip}
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage[outputdir=tmp]{minted}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage[hidelinks]{hyperref}
+
+% Header and footer setup
+\pagestyle{fancy}
+\rhead{Notes}
+\lhead{Book Title}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+% Image directory specification
+\graphicspath{ {./images/} }
+
+% Settings minted option for the entire document
+\definecolor{LightGray}{rgb}{0.9, 0.9, 0.9}
+\setminted{frame=lines,framesep=2mm,bgcolor=LightGray,linenos,
+  fontsize=\footnotesize, baselinestretch=1.2}
+
+% Start of document
+\begin{document}
+
+% Title page and table of contents setup
+\begin{titlepage}
+  \begin{center}
+    \vspace*{1cm}
+    \Huge
+    \textbf{APPERO}\\
+    \vspace{0.4cm}
+    Optimisation Hivernale\\
+    \vspace{5cm}
+    \textbf{Jose A. Henriquez Roa}
+    \newpage
+    \normalsize
+    \tableofcontents
+    \newpage
+  \end{center}
+\end{titlepage}
+
+% Document Body:
+\section{Contributions}
+Hoping to do the project on my own I chose an empty group on the 8'th of August.
+I started doing the research to solve the problem that same day. By the time the
+annoucement was made that groups with less than 3 or 4 members were merged on
+the 17'th of August I already had a working implementation of an algorithm to
+solve the problem.\\\\
+During our first group meeting, the decision was then made to split the
+implementation and presentation of the three main algorithms I used in between
+the three of us. Their new implementations were then to be integrated later on.
+However, as time passed the decision was made to keep my implementation
+integrated into the main algorithm. This is the reason why they are all listed
+here.
+\subsection{Main algorithm implementation}
+\textbf{Path:} \texttt{appero/snowymontreal/solve.py}\\\\
+This is the algorithm that presents the solution to the main
+\textbf{Route Inspection Problem} or \textbf{Chinese Postman Problem}.
+\subsection{Main algorithm presentation}
+\textbf{Path:} \texttt{appero/videos/pb-intro.mp4}\\\\
+I was responsible for the presentation of this one. In the final video this one
+is under the \textit{Introduction} section. The singled out clip can also be
+found in the above mentioned \textbf{Path}.
+\subsection{Hungarian algorithm implementation}
+\textbf{Path:} \texttt{appero/snowymontreal/hungarian.py}\\\\
+This algorithm is used to find the minimum matching in the bipartite graph built
+from the nodes of degree bigger and smaller than 0 (more information on this on
+the presentation video). This algorithm was developed and published by Harold
+Kuhn in 1955.
+\subsection{Hungarian algorithm presentation}
+\textbf{Path:} \texttt{appero/videos/hungarian.mp4}\\\\
+I was also responsible for the presentation of this algorithm. This one is found
+on the respective \textit{Hungarian Algorithm} section of the final video or in
+the aforementioned \textbf{Path}.
+\subsection{Floyd-Warshall algorithm implementation}
+\textbf{Path:} \texttt{appero/snowymontreal/floyd\_warshall.py}\\\\
+This algorithm is used to find the minimum weight path in between all nodes in
+the graph. It is mostly used for the path duplication section of the main
+algorithm (more information on this on the presentation video). This algorithm
+was developed and published by Rober Floyd and Stephen Warshall in 1962.
+\subsection{Hierholzer algorithm implementation}
+\textbf{Path:} \texttt{appero/snowymontreal/hierholzer.py}\\\\
+After path duplication this algorithm is used for finding the final returned
+eulerian path (more information on this on the presentation video). This
+algorithm was developed and published by Carl Hierholzer in 1873.
+\subsection{Test suit}
+\textbf{Path: \texttt{appero/test.py}}\\\\
+This is a simple black box test suit for verifying the main algorithms output
+correctfulness.
+\section{Learnings}
+\subsection{Chinese postman problem}
+As of now I have learned of a way to solve the Chinese Postman Problem.
+\subsection{Hungarian Algorithm}
+I have also gotten more familiar with the inner workings of the Hungarian
+matching algorithm.
+\end{document}
