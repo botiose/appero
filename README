@@ -1,10 +1,26 @@
+################################# DESCRIPTION #################################
 This project presents a solution to the Chinese Postman Problem.
 
 Given either directed or undirected graph with positively weighted edges a
 minimum weight traversal path of all edges in the graph is returned.
+
+#################################### USAGE ####################################
 
 The 'solve' function can be imported with the following line:
 
 from snowymontreal.solver import solve
 
 An example use case is given in 'main.py' on the root folder.
+
+################################## ALGORITHMS #################################
+
+Three algorithms make the core of the project, these are the following:
+
+* Floyd-Warshall Algorithm: This one is located under
+                            "snowymontreal/floyd_warshall.py"
+
+* Hierholzer Algorithm: For this one we have multiple implementations, one is
+                        located under "snowymontreal/hierholzer" and the other
+                        on "snowymontreal/hierholzer_it"
+
+* Hungarian Algorithm: This one is located under "snowymontreal/hungarian.py"
