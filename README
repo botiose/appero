@@ -29,9 +29,9 @@ Three algorithms make the core of the project, these are the following:
 
 ################################## TEST SUIT ##################################
 
-The test suit can be launched from the root folder with:
+The test suit can be launched from the 'test' folder with:
 
-$ python3 test/test.py
+$ python3 test.py
 
 #################################### GITHUB ###################################
 
