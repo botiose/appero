@@ -1,4 +1,3 @@
-from snowymontreal.hungarian import match_hungarian
 from snowymontreal.solver import solve
 
 edges = [(0, 2, 20), (0, 1, 10), (1, 4, 10), (1, 3, 50), (2, 3, 20), (2, 4, 33),
