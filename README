@@ -27,6 +27,12 @@ Three algorithms make the core of the project, these are the following:
 
 * Hungarian Algorithm: This one is located under "snowymontreal/hungarian.py"
 
+################################## TEST SUIT ##################################
+
+The test suit can be launched from the root folder with:
+
+$ python3 test/test.py
+
 #################################### GITHUB ###################################
 
 GitHub repository: https://github.com/botiose/appero
