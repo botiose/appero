@@ -1,4 +1,5 @@
 ################################# DESCRIPTION #################################
+
 This project presents a solution to the Chinese Postman Problem.
 
 Given either directed or undirected graph with positively weighted edges a
@@ -16,11 +17,16 @@ An example use case is given in 'main.py' on the root folder.
 
 Three algorithms make the core of the project, these are the following:
 
-* Floyd-Warshall Algorithm: This one is located under
-                            "snowymontreal/floyd_warshall.py"
+* Floyd-Warshall Algorithm: For this one we have multiple implementations, one
+  is located under "snowymontreal/floyd_warshall.py" and the other on
+  "snowymontreal/floyd_warshall_alt.py"
 
-* Hierholzer Algorithm: For this one we have multiple implementations, one is
-                        located under "snowymontreal/hierholzer" and the other
-                        on "snowymontreal/hierholzer_it"
+* Hierholzer Algorithm: For this one we have multiple implementations as well,
+  one is located under "snowymontreal/hierholzer.py" and the other on
+  "snowymontreal/hierholzer_it.py"
 
 * Hungarian Algorithm: This one is located under "snowymontreal/hungarian.py"
+
+#################################### GITHUB ###################################
+
+GitHub repository: https://github.com/botiose/appero
